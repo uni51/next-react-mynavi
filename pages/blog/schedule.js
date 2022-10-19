@@ -9,6 +9,7 @@ import {
 } from "components/two-column";
 import PostBody from "components/post-body";
 import ConvertBody from "components/convert-body";
+import PostCategories from "components/post-categories";
 
 export default function Schedule({
   title,
@@ -40,7 +41,9 @@ export default function Schedule({
               <ConvertBody contentHTML={content} />
             </PostBody>
           </TwoColumnMain>
-          <TwoColumnSidebar></TwoColumnSidebar>
+          <TwoColumnSidebar>
+            <PostCategories categories={categories} />
+          </TwoColumnSidebar>
         </TwoColumn>
       </article>
     </Container>
