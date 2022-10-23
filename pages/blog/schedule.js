@@ -44,6 +44,7 @@ export default function Schedule({
             height={eyecatch.height}
             size="(min-width: 1152px) 1152px, 100vw"
             priority
+            placeholder="blur"
             blurDataURL="{eyecatch.blurDataUrl}"
           />
         </figure>
