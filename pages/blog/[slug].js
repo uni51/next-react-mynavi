@@ -1,8 +1,10 @@
 import { getPostBySlug, getAllSlugs } from "lib/api";
 import { extractText } from "lib/extract-text";
+import { prevNextPost } from "lib/prev-next-post";
 import Meta from "components/meta";
 import Container from "components/container";
 import PostHeader from "components/post-header";
+import Pagination from "components/pagination";
 import Image from "next/image";
 import { eyecatchLocal } from "lib/constants"; // ローカルの代替アイキャッチ画像
 import { getPlaiceholder } from "plaiceholder";
@@ -22,6 +24,8 @@ export default function Post({
   eyecatch,
   categories,
   description,
+  prevPost,
+  nextPost,
 }) {
   return (
     <Container>
@@ -59,6 +63,12 @@ export default function Post({
             <PostCategories categories={categories} />
           </TwoColumnSidebar>
         </TwoColumn>
+        <Pagination
+          prevText={prevPost.title}
+          prevUrl={`/blog/${prevPost.slug}`}
+          nextText={nextPost.title}
+          nextUrl={`/blog/${nextPost.slug}`}
+        />
       </article>
     </Container>
   );
@@ -85,6 +95,9 @@ export async function getStaticProps(context) {
   const { base64 } = await getPlaiceholder(eyecatch.url);
   eyecatch.blurDataURL = base64;
 
+  const allSlugs = await getAllSlugs();
+  const [prevPost, nextPost] = prevNextPost(allSlugs, slug);
+
   return {
     props: {
       title: post.title,
@@ -93,6 +106,8 @@ export async function getStaticProps(context) {
       eyecatch: eyecatch,
       categories: post.categories,
       description: description,
+      prevPost: prevPost,
+      nextPost: nextPost,
     },
   };
 }
