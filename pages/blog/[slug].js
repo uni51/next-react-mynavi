@@ -15,7 +15,7 @@ import PostBody from "components/post-body";
 import ConvertBody from "components/convert-body";
 import PostCategories from "components/post-categories";
 
-export default function Schedule({
+export default function Post({
   title,
   publish,
   content,
@@ -64,8 +64,15 @@ export default function Schedule({
   );
 }
 
-export async function getStaticProps() {
-  const slug = "micro";
+export async function getStaticPaths() {
+  return {
+    paths: ["/blog/schedule", "/blog/music", "blog/micro"],
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(context) {
+  const slug = context.params.slug;
 
   const post = await getPostBySlug(slug);
 
