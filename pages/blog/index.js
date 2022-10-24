@@ -23,7 +23,6 @@ export async function getStaticProps() {
   const posts = await getAllPosts();
 
   for (const post of posts) {
-    console.log(post);
     if (!post.hasOwnProperty("eyecatch")) {
       post.eyecatch = eyecatchLocal;
     }
